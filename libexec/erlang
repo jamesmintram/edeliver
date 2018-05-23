@@ -694,17 +694,16 @@ upload_release_archive() {
       set -e
       mkdir -p ${_destination_directory} $SILENCE
       cd ${_destination_directory} $SILENCE
-      
-      AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\" AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\" s3cmd get ${AWS_BUCKET_NAME}/${_release_file} ${APP}_${_release_version}.tar.gz 2>/dev/null
+      AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\" AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\" s3cmd get ${AWS_BUCKET_NAME}/${_release_file} ${APP}_${_release_version}.tar.gz 2>/dev/null"
 
-      [ -f ~/.profile ] && source ~/.profile
-      set -e
-      mkdir -p ${_destination_directory} $SILENCE
-      cd ${_destination_directory} $SILENCE
-      AWS_ARGUMENTS=\"get ${AWS_BUCKET_NAME}/${_release_file} \" AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\" \\
-      AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\" perl > ${APP}_${_release_version}.tar.gz 2>/dev/null <<'EOF'
-        content from libexec/aws file
-      EOF ;"
+
+      # [ -f ~/.profile ] && source ~/.profile
+      # set -e
+      # mkdir -p ${_destination_directory} $SILENCE
+      # cd ${_destination_directory} $SILENCE
+      # AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\" \\
+      # AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\" s3cmd get ${AWS_BUCKET_NAME}/${_release_file} ${APP}_${_release_version}.tar.gz 2>/dev/null
+
   elif [ "$RELEASE_STORE_TYPE" = "local" ]; then
     __remote "
       [ -f ~/.profile ] && source ~/.profile
