@@ -678,6 +678,7 @@ __get_releases_in_store() {
 # the current release file and version must be set in the
 # RELEASE_FILE and VERSION variables. an optional destination directory
 # can be passed as argument, which is $DELIVER_TO by default
+# AWS_ARGUMENTS=\"get ${AWS_BUCKET_NAME}/${_release_file} \" AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\" AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\" perl > ${APP}_${_release_version}.tar.gz 2>/dev/null <<'EOF'${_aws_script_content}EOF ;" "$HOSTS_APP_USER" "
 upload_release_archive() {
   local _destination_directory=${1:-"$DELIVER_TO"}
   local _release_file=${2:-"$RELEASE_FILE"}
@@ -693,7 +694,8 @@ upload_release_archive() {
       set -e
       mkdir -p ${_destination_directory} $SILENCE
       cd ${_destination_directory} $SILENCE
-      AWS_ARGUMENTS=\"get ${AWS_BUCKET_NAME}/${_release_file} \" AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\" AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\" perl > ${APP}_${_release_version}.tar.gz 2>/dev/null <<'EOF'${_aws_script_content}EOF ;" "$HOSTS_APP_USER" "
+      
+      AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\" AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\" s3cmd get ${AWS_BUCKET_NAME}/${_release_file} ${APP}_${_release_version}.tar.gz 2>/dev/null
 
       [ -f ~/.profile ] && source ~/.profile
       set -e
