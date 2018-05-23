@@ -694,7 +694,7 @@ upload_release_archive() {
       set -e
       mkdir -p ${_destination_directory} $SILENCE
       cd ${_destination_directory} $SILENCE
-      AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\" AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\" s3cmd get ${AWS_BUCKET_NAME}/${_release_file} ${APP}_${_release_version}.tar.gz 2>/dev/null"
+      AWS_ACCESS_KEY_ID=\"$AWS_ACCESS_KEY_ID\" AWS_SECRET_ACCESS_KEY=\"$AWS_SECRET_ACCESS_KEY\" s3cmd get s3://${AWS_BUCKET_NAME}/${_release_file} ${APP}_${_release_version}.tar.gz --force 2>/dev/null"
 
 
       # [ -f ~/.profile ] && source ~/.profile
